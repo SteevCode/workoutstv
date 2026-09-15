@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Workout Tracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#121212">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+
+    <header id="main-header">
+        Workout Tracker
+    </header>
+
+    <main id="app-content">
+        <!-- View: Workout -->
+        <div id="view-workout" class="view active">
+            <div id="workout-day-selector" style="display:flex; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px; gap: 10px;">
+                <!-- Filled dynamically -->
+            </div>
+            
+            <div id="workout-summary" class="card">
+                <div style="text-transform: uppercase; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 5px;">Today</div>
+                <h2 id="workout-title">CHEST DAY</h2>
+                <p id="workout-meta">4 EXERCISES <br> 10 SETS</p>
+                <button id="btn-start-workout" class="btn">Start Workout</button>
+            </div>
+
+            <div id="workout-active-area" style="display: none;">
+                <div class="progress-container">
+                    <div id="workout-progress-bar" class="progress-bar"></div>
+                </div>
+                <p id="workout-progress-text" style="text-align: center; font-weight: bold; margin-bottom: 20px;">0 / 10 SETS COMPLETED</p>
+
+                <div id="exercises-container">
+                    <!-- Exercises injected here -->
+                </div>
+
+                <div class="card">
+                    <h3>Workout Notes</h3>
+                    <textarea id="workout-notes" placeholder="How did it feel today?"></textarea>
+                </div>
+
+                <button id="btn-finish-workout" class="btn" style="background-color: var(--success); color: white;">Finish Workout</button>
+            </div>
+        </div>
+
+        <!-- View: Progress -->
+        <div id="view-progress" class="view">
+            <h2>Progress</h2>
+            
+            <div class="card" style="text-align: center;">
+                <h3 id="progress-level">LEVEL 1</h3>
+                <p id="progress-xp-text">0 / 1000 XP</p>
+                <div class="progress-container" style="margin-bottom: 0;">
+                    <div id="progress-xp-bar" class="progress-bar" style="background-color: var(--success);"></div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div id="stat-workouts" class="val">0</div>
+                    <div class="lbl">Workouts</div>
+                </div>
+                <div class="stat-box">
+                    <div id="stat-streak" class="val">0</div>
+                    <div class="lbl">Streak (Days)</div>
+                </div>
+                <div class="stat-box">
+                    <div id="stat-volume" class="val">0</div>
+                    <div class="lbl">Total Volume (kg)</div>
+                </div>
+                <div class="stat-box">
+                    <div id="stat-sets" class="val">0</div>
+                    <div class="lbl">Total Sets</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 20px;">Muscle Groups</h3>
+            <div id="muscle-stats-container">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+
+        <!-- View: History -->
+        <div id="view-history" class="view">
+            <h2>History</h2>
+            <div id="history-container">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+
+        <!-- View: Settings -->
+        <div id="view-settings" class="view">
+            <h2>Settings</h2>
+            <div class="card">
+                <h3>Body Profile</h3>
+                <div class="form-group">
+                    <label>Weight (kg)</label>
+                    <input type="number" id="profile-weight">
+                </div>
+                <div class="form-group">
+                    <label>Height (cm)</label>
+                    <input type="number" id="profile-height">
+                </div>
+                <button id="btn-save-profile" class="btn btn-secondary">Save Profile</button>
+            </div>
+
+            <div class="card">
+                <h3>Data Management</h3>
+                <button id="btn-export" class="btn btn-secondary" style="margin-bottom: 10px;">Export Data</button>
+                <button id="btn-import-trigger" class="btn btn-secondary">Import Data</button>
+                <input type="file" id="file-import" style="display: none;" accept=".json">
+            </div>
+        </div>
+    </main>
+
+    <nav>
+        <button id="nav-workout" class="active">Workout</button>
+        <button id="nav-progress">Progress</button>
+        <button id="nav-history">History</button>
+        <button id="nav-settings">Settings</button>
+    </nav>
+
+    <script src="js/store.js"></script>
+    <script src="js/plan.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
